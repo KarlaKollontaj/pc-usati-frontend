@@ -20,10 +20,10 @@ export function startApp(){
     console.log("app avviata");
     AVAILABLE_PROD.forEach(element => {
         console.log("elemento",element.type);
-        !categorie.includes(element.type) ? categorie.push(element.type) : undefined;
+        if(!categorie.includes(element.type)){
+        categorie.push(element.type)
+        }
     });
-
-    //elemento carrello
 
     //inserisco elementi nel DOM con le apposite funzioni
     document.body.append(header(),ShoppingCart.getTopElement() , navbar(categorie), iniMain(), foot());
@@ -36,15 +36,16 @@ const header = () => {
 
     //elemento titolo H1
     const tit1 = document.createElement('h1')
-    tit1.appendChild(document.createTextNode("Lunga vita ai Devices"))
+    tit1.appendChild(document.createTextNode("Lunga vita ai Devices"));
     tit1.setAttribute('class', 'top-page');
     tit1.id = 'main-title';
 
     //elemento sottotitpolo (p)
     const subH = document.createElement('p')
-    subH.innerHTML =
-        `<p id="sub-header" class="top-page sub-header">Usato è meglio che nuovo!</p>` ;
-    
+    subH.appenChild(document.createTextNode("Usato è meglio che nuovo!"));
+    subH.setAttribute('class','top-page sub-header');
+    subH.id = 'sub-header';
+
     //logo immagine
     const logo = document.createElement('img');
     logo.id = 'logo';
@@ -87,7 +88,7 @@ const navbar = (arrCat) => {
         btn.append(
             document.createTextNode(`Categoria ${e.toString().toUpperCase()}`)
         );
-        btn.addEventListener('click', (e) => {clickCat(e.target.id)});
+        btn.addEventListener('click', (event) => {clickCat(event.target.id)});
         
         //inserimento nella DOM
         item.append(btn);
@@ -126,15 +127,6 @@ const iniMain = () => {
     return mainEl;
 }
 
-function clickCat(id){ 
-    /**filtra categoria e passa a cards gli elementi da visualizzare */
-    console.log("Selezionato la categoria", id);
-    let prods = AVAILABLE_PROD.filter((en) => en.type === id);
-    console.log("prodotti trovati ", prods);
-
-    showcase(prods);
-}
-
 const showcase = (arrProd) => {
     /**svuota il main e lo ripopola con le card  */
     //Lo svuota main:
@@ -158,9 +150,20 @@ const showcase = (arrProd) => {
     })
 
     //inserimento DOM nel main
-    content.append(...cardArr);
+    content.append(...cardArr); //i tre puntini corrispondo alla destrutturazione dell'array: cardArr[0], cardArr[1],....
     mainEl.append(content);
 }
+
+function clickCat(id){ 
+    /**filtra categoria e passa a cards gli elementi da visualizzare */
+    console.log("Selezionato la categoria", id);
+    let prods = AVAILABLE_PROD.filter((element) => element.type === id);
+    console.log("prodotti trovati ", prods);
+
+    showcase(prods);
+}
+
+
 
 const card = (article) => {
     /**ritorna una card costruita per l'oggetto passato come parametro*/
