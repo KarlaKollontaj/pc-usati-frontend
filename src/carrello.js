@@ -31,11 +31,12 @@ export let Cart = {
         return tot;
     },
 
-    removeProduct: function (id) {
-        //elimina dall'array un prodotto dato il suo id
-        const rem = this._products.pop(e => e.id === id);
-        console.log("elemento eliminato dal carrello: ",rem);
-    },
+    //sbagliato!!! forse usare slice al posto di pop
+    // removeProduct: function (id) {
+    //     //elimina dall'array un prodotto dato il suo id
+    //     const rem = this._products.pop(e => e.id === id);
+    //     console.log("elemento eliminato dal carrello: ",rem);
+    // },
 
     _getCartElement: function () {
         //ritorna elemento html con icona carrello
